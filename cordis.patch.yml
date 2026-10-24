@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-boot-spectacle
+      name: '@local/dsh-boot-spectacle'

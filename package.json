@@ -1,0 +1,35 @@
+{
+  "name": "@local/dsh-boot-spectacle",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "A monochrome Harness OS startup sequence for the DeepSeek Harness Web UI: access gate with a female voice prompt, typewriter headlines, a live session profile, a zero-to-full circular radar with a single needle synced to the radar progress, Chinese-then-English welcome voice, glitch transitions, synthesized loading audio, and replay when restored from the system tray.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-layout"
+      ]
+    }
+  }
+}
