@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
-  "description": "A monochrome Harness OS startup sequence for the DeepSeek Harness Web UI: access gate with a female voice prompt, typewriter headlines, a real machine profile (computer name, user, time, IP), a zero-to-full circular radar with a single needle synced to the radar progress, Chinese-then-English welcome voice, glitch transitions, synthesized loading audio, and replay when restored from the system tray.",
+  "description": "A theme-aware Harness OS startup sequence for the DeepSeek Harness Web UI: an animated DeepSeek whale and DEEPSEEK DSH logo intro that docks in the corner, access gate with a female voice prompt, typewriter headlines, a real machine profile (computer name, user, time, IP), a zero-to-full circular radar with a single needle synced to the radar progress, Chinese-then-English welcome voice, glitch transitions, synthesized loading audio, button-only interaction, and replay when restored from the system tray.",
   "type": "module",
   "exports": {
     ".": "./index.js",

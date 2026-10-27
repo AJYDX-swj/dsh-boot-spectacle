@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Harness OS · Boot Sequence",
-    "description": "A monochrome Harness OS boot sequence with spoken access prompts, typewriter headlines, a real machine profile (computer name, user, time, IP), a zero-to-full circular radar with a radar-progress-synced needle, glitch scene transitions, a Chinese-then-English welcome voice, synthesized loading audio, and replay when the window is restored from the system tray."
+    "description": "A theme-aware Harness OS boot sequence with an animated DeepSeek whale and DEEPSEEK DSH logo intro that docks in the corner, spoken access prompts, typewriter headlines, a real machine profile (computer name, user, time, IP), a zero-to-full circular radar with a radar-progress-synced needle, glitch scene transitions, a Chinese-then-English welcome voice, synthesized loading audio, button-only interaction, and tray-restore replay."
   }
 }

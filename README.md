@@ -1,10 +1,15 @@
 # Harness OS · Boot Sequence
 
-An interactive, monochrome startup sequence for DeepSeek Harness. It occupies
+An interactive, theme-aware startup sequence for DeepSeek Harness. It occupies
 the frame-wide `shell.overlay` seat on page load and holds at an access gate
-until you start it. Click anywhere on the gate, click the **授予访问权限 / GRANT
-ACCESS** action, or press **Enter / Space**. One click also unlocks the audio
-that browsers keep locked behind a user gesture.
+until you start it. Only the **授予访问权限 / GRANT ACCESS** button starts the
+sequence; `SKIP` and `Esc` are the explicit exits. Clicking elsewhere does not
+advance, and Enter/Space outside a focused button does nothing. The same
+button-only rule applies to the final `进入系统 / ENTER` action. A button click
+also unlocks the audio that browsers keep locked behind a user gesture. Before
+the gate, a short logo intro brings the DeepSeek whale lockup (深度求索 /
+DEEPSEEK / DEEPSEEK HARNESS) into the center and docks a compact whale + DSH
+mark at the top-right corner for the rest of the sequence.
 
 The overlay also replays when the desktop window comes back after being hidden
 to the system tray. This is intentionally **not** the same as a normal taskbar
@@ -12,6 +17,9 @@ minimize: the watcher runs only in the Electron desktop shell, and it separates
 a tray hide from a minimized window using the window's off-screen coordinates
 and whether a resize occurred while hidden. Ordinary minimize/restore is
 skipped; a tray hide/restore replays the sequence after at least 800 ms hidden.
+The browser cannot distinguish that path from Alt+Tab or long occlusion, so an
+extended app switch can also replay; a desktop-shell tray event would be needed
+for exact discrimination.
 
 ## Install
 
@@ -23,10 +31,12 @@ it from this folder rather than from npm.
 2. In DeepSeek Harness, install this folder as a bundle through Plugin Manager,
    or ask the DSH agent to call `install_bundle` with the absolute folder path.
 3. Restart/reload DSH once. The boot overlay appears on the next page load.
-   Click the access gate to start; browser autoplay requires that gesture.
+   Click the **GRANT ACCESS** button to start; browser autoplay requires that
+   gesture.
 4. `Ctrl+Shift+R` is a browser shortcut, not a command registered by this
    plugin. In the desktop shell, the overlay replays when the window is restored
-   from the system tray; ordinary taskbar minimize/restore is skipped.
+   from the system tray; ordinary taskbar minimize/restore is skipped, though a
+   long Alt+Tab away can also satisfy the heuristic.
 
 No build step is required: `client.js` is already the browser module. The
 plugin uses the `shell.overlay` slot, `ctx.locale`, `ctx.slots` and the standard
@@ -34,38 +44,43 @@ plugin uses the `shell.overlay` slot, `ctx.locale`, `ctx.slots` and the standard
 
 ## The sequence
 
-1. **Authorization** — a Harness OS HUD (`DEEPSEEK / SYNTHESIZE INTELLIGENCE /
+1. **Logo intro** — the DeepSeek whale + 深度求索 + DEEPSEEK + DEEPSEEK HARNESS
+   lockup fades into the center like the reference splash and stays large for
+   the full three-second intro. It starts shrinking only as the access gate
+   enters, so the dock and the next scene overlap; the corner swaps to a compact
+   whale + **DSH** mark. The mark stays there for the rest of the sequence while
+   the HUD fades in.
+2. **Authorization** — a Harness OS HUD (`DEEPSEEK / SYNTHESIZE INTELLIGENCE /
    HARNESS OS`), profile clock, live session ID / session-count / status
    readouts, a self-check card, and the access gate. A spoken permission prompt
    plays here.
-2. **Session profile** — real data from the active session, not design copy and
-   not fabricated identity numbers: session ID, running state, total visible
-   session count, local time and voice mode. The session title is deliberately
-   omitted. Values are 12 px, labels 8.2 px, and the screen holds for 4 seconds.
-3. **Permission read** — while reading, the dial is deliberately minimal and
-   **monochrome**: two white outer rings, a white progress arc, a white needle,
-   and a white 000 → 100 readout, with no sector, tick detail or colored
-   accents. The full HUD stays visible, but its accent variables are neutralized
-   for this stage. When verification completes, the dial resolves into a
-   **bright-blue main line**: the needle and progress arc keep their bright blue
-   color and glow, while the 60-tick outer ring, concentric inner rings, spokes
-   and crosshair are rendered faint. The four cardinal arrowheads and the
-   translucent upper-left sector were removed. The needle is driven by the same
-   **radar** progress value as the circular arc, so both advance together; there
-   are no trailing arcs, tick marks, wedge or triangle behind it. The radar
-   starts a fresh full turn at **0%** when this stage begins: the arc and needle
-   begin at the top and fill the whole circle over the 2.2-second read. The
-   overall check rail is already at 50% at this point because the profile
-   consumed the first half of the boot check. A screen-wide datum crosshair and
-   a large orbital halo frame the composition.
-4. **Verified** — the circular progress ring closes, the needle/progress line
-   turns bright blue while the surrounding dial stays subdued, a confirmation
-   tone plays, and the status rail reports `PERMISSION AUTHORIZED`. The blue is
-   not a hard switch: the dial begins desaturated and blooms into color over
-   about 1.15 seconds, a blue ring expands once around it, and the small HUD
-   accents cross-fade from neutral to blue. Reduced motion shows the final
-   colored state immediately.
-5. **Welcome** — a `WELCOME TO` line, white `DEEPSEEK HARNESS` plate, a diamond
+3. **System profile** — real local data: computer name, OS username, live local
+   time, first non-internal IP and running state. Values are 16 px, labels
+   10.5 px, and the screen holds for 4 seconds.
+4. **Permission read** — while reading, the dial is deliberately minimal and
+   **neutral**: two foreground-tone outer rings, a foreground progress arc, a
+   foreground needle, and a foreground 000 → 100 readout, with no sector, tick
+   detail or accent color. The full HUD stays visible, but its accent variables
+   are neutralized for this stage. When verification completes, the dial
+   resolves into a **brand-accent main line**: the needle and progress arc take
+   the live DSH brand color and glow, while the 60-tick outer ring, concentric
+   inner rings, spokes and crosshair are rendered faint. The four cardinal
+   arrowheads and the translucent upper-left sector were removed. The needle is
+   driven by the same **radar** progress value as the circular arc, so both
+   advance together; there are no trailing arcs, tick marks, wedge or triangle
+   behind it. The radar starts a fresh full turn at **0%** when this stage
+   begins: the arc and needle begin at the top and fill the whole circle over the
+   2.2-second read. The overall check rail is already at 50% at this point
+   because the profile consumed the first half of the boot check. A screen-wide
+   datum crosshair and a large orbital halo frame the composition.
+5. **Verified** — the circular progress ring closes, the needle/progress line
+   takes the brand accent while the surrounding dial stays subdued, a
+   confirmation tone plays, and the status rail reports `PERMISSION AUTHORIZED`.
+   The color is not a hard switch: the dial begins desaturated and blooms into
+   the accent over about 1.15 seconds, an accent ring expands once around it, and
+   the small HUD accents cross-fade from neutral to the accent. Reduced motion
+   shows the final colored state immediately.
+6. **Welcome** — a `WELCOME TO` line, inverse `DEEPSEEK HARNESS` plate, a diamond
    mark, and a final `进入系统 / ENTER` action. It does not auto-close: the ENTER
    button is the normal exit, with `SKIP` and `Esc` as the explicit escape
    hatches.
@@ -73,20 +88,30 @@ plugin uses the `shell.overlay` slot, `ctx.locale`, `ctx.slots` and the standard
 Scene headlines, English subtitles and welcome lines enter with a per-character
 typewriter and a blinking caret. The reveal interval is doubled, so typing is at
 least twice as slow as the earlier builds. The caret uses the surrounding text
-color, so it is black inside the white name plate. Reduced-motion users see the
-full text immediately.
+color, so it contrasts inside the name plate. Reduced-motion users see the full
+text immediately.
 
-Every scene transition includes a short monochrome glitch: scanline flicker,
-two displaced horizontal bands, and a clipped horizontal jolt on the incoming
-scene. It is decorative only (pointer-events none) and is disabled under
-reduced motion.
+The overlay is **theme-aware**. Base background, font, border, surface and accent
+colors resolve from the live DSH theme tokens:
+`--dsw-alias-bg-base`, `--dsw-alias-label-primary`,
+`--dsw-alias-label-secondary`, `--dsw-alias-label-tertiary`,
+`--dsw-alias-label-dimmed`, `--dsw-alias-brand-primary` and
+`--dsw-alias-state-warn-primary`. Translucent lines and surfaces are derived with
+`color-mix()` from the current foreground, so light, dark and custom accent
+themes all work. Theme changes apply live without reloading the page. The whale
+logo is an alpha mask painted with the current text color, so it stays legible
+on both light and dark themes.
 
-The pacing is deliberate: the check runs for 6.2 seconds, the profile holds for
-4 seconds, the radar's zero-to-full read takes 2.2 seconds (well inside the
-three-second limit), the verified hold is 2.6 seconds, and the exit fade is 0.9
-seconds. The welcome screen waits for input instead of auto-closing. Scene
-entrances, radar needle advance, action pulse, waveform and voice indicators were
-slowed to match.
+Every scene transition includes a short glitch: scanline flicker, two displaced
+horizontal bands, and a clipped horizontal jolt on the incoming scene. It is
+decorative only (pointer-events none) and is disabled under reduced motion.
+
+The pacing is deliberate: the logo intro runs for 3 seconds, the check runs
+for 6.2 seconds, the profile holds for 4 seconds, the radar's zero-to-full read
+takes 2.2 seconds (well inside the three-second limit), the verified hold is 2.6
+seconds, and the exit fade is 0.9 seconds. The welcome screen waits for input
+instead of auto-closing. Scene entrances, radar needle advance, action pulse,
+waveform and voice indicators were slowed to match.
 
 ## Interaction and sound
 
@@ -123,7 +148,7 @@ slowed to match.
 
 The profile screen shows the local computer name, OS username, first
 non-internal IPv4/IPv6 address and a live local clock. Its label/value columns are
-tightened and centered, labels use a higher-contrast white, and the values use a
+tightened and centered, labels use a higher-contrast foreground, and the values use a
 larger type scale than the rest of the HUD. The Host half reads those values with
 Node's `os` module, injects them into `window.__DSH_BOOT_PROFILE__` at page load,
 and also serves the same JSON at `/dsh-boot/profile.json`; if the inline value is
@@ -131,9 +156,10 @@ missing, the Client requests that endpoint and updates the panel. Each
 installation therefore shows its own machine's values. If both local paths are
 unavailable, the panel shows dashes rather than another machine's details.
 Everything is CSS, inline SVG, Web Audio, and embedded audio data. The sequence
-replays on each page load and when the desktop window is restored from the system
-tray after being hidden for at least 800 ms; ordinary taskbar minimize/restore is
-skipped.
+runs on each page load and replays when the desktop window is restored from the
+system tray after being hidden for at least 800 ms; ordinary taskbar
+minimize/restore is skipped. Because the browser cannot separate that from a
+long Alt+Tab/occlusion, the latter can also replay.
 
 ## Voice assets
 
