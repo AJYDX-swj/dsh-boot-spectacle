@@ -144,11 +144,11 @@ window.__ModuleLoader__.load({
   --dshb-faint: var(--dsw-alias-label-dimmed, #5d6064);
   --dshb-cyan: var(--dsw-alias-brand-primary, #a7e7e0);
   --dshb-amber: var(--dsw-alias-state-warn-primary, #dda05f);
-  --dshb-blue: var(--dsw-alias-brand-primary, #8ec1ff);
-  --dshb-blue-bright: color-mix(in srgb, var(--dshb-blue) 58%, var(--dshb-paper));
-  --dshb-blue-mid: color-mix(in srgb, var(--dshb-blue) 55%, transparent);
-  --dshb-blue-dim: color-mix(in srgb, var(--dshb-blue) 22%, transparent);
-  --dshb-blue-faint: color-mix(in srgb, var(--dshb-blue) 9%, transparent);
+  --dshb-blue: #8ec1ff;
+  --dshb-blue-bright: #cfe6ff;
+  --dshb-blue-mid: color-mix(in srgb, #8ec1ff 55%, transparent);
+  --dshb-blue-dim: color-mix(in srgb, #8ec1ff 22%, transparent);
+  --dshb-blue-faint: color-mix(in srgb, #8ec1ff 9%, transparent);
   --dshb-line: color-mix(in srgb, var(--dshb-paper) 11%, transparent);
   --dshb-line-soft: color-mix(in srgb, var(--dshb-paper) 5.5%, transparent);
   --dshb-mono: "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;

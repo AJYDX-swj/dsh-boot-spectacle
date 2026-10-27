@@ -62,8 +62,8 @@ plugin uses the `shell.overlay` slot, `ctx.locale`, `ctx.slots` and the standard
    foreground needle, and a foreground 000 → 100 readout, with no sector, tick
    detail or accent color. The full HUD stays visible, but its accent variables
    are neutralized for this stage. When verification completes, the dial
-   resolves into a **brand-accent main line**: the needle and progress arc take
-   the live DSH brand color and glow, while the 60-tick outer ring, concentric
+   resolves into a **fixed ice-blue main line**: the needle and progress arc keep
+   their bright blue color and glow, while the 60-tick outer ring, concentric
    inner rings, spokes and crosshair are rendered faint. The four cardinal
    arrowheads and the translucent upper-left sector were removed. The needle is
    driven by the same **radar** progress value as the circular arc, so both
@@ -74,7 +74,7 @@ plugin uses the `shell.overlay` slot, `ctx.locale`, `ctx.slots` and the standard
    because the profile consumed the first half of the boot check. A screen-wide
    datum crosshair and a large orbital halo frame the composition.
 5. **Verified** — the circular progress ring closes, the needle/progress line
-   takes the brand accent while the surrounding dial stays subdued, a
+   takes the fixed ice-blue accent while the surrounding dial stays subdued, a
    confirmation tone plays, and the status rail reports `PERMISSION AUTHORIZED`.
    The color is not a hard switch: the dial begins desaturated and blooms into
    the accent over about 1.15 seconds, an accent ring expands once around it, and
@@ -91,8 +91,8 @@ least twice as slow as the earlier builds. The caret uses the surrounding text
 color, so it contrasts inside the name plate. Reduced-motion users see the full
 text immediately.
 
-The overlay is **theme-aware**. Base background, font, border, surface and accent
-colors resolve from the live DSH theme tokens:
+The overlay is **theme-aware**. Base background, font, border, surface and
+secondary HUD accent colors resolve from the live DSH theme tokens:
 `--dsw-alias-bg-base`, `--dsw-alias-label-primary`,
 `--dsw-alias-label-secondary`, `--dsw-alias-label-tertiary`,
 `--dsw-alias-label-dimmed`, `--dsw-alias-brand-primary` and
@@ -100,7 +100,9 @@ colors resolve from the live DSH theme tokens:
 `color-mix()` from the current foreground, so light, dark and custom accent
 themes all work. Theme changes apply live without reloading the page. The whale
 logo is an alpha mask painted with the current text color, so it stays legible
-on both light and dark themes.
+on both light and dark themes. The completed radar deliberately keeps its fixed
+ice-blue accent in every theme, because that blue is the read-complete signal
+rather than a theme surface color.
 
 Every scene transition includes a short glitch: scanline flicker, two displaced
 horizontal bands, and a clipped horizontal jolt on the incoming scene. It is
